@@ -1,0 +1,21 @@
+name: 'Version'
+description: 'Extract short SHA and create a label'
+outputs:
+  short_sha:
+    description: 'Short SHA of the commit'
+  label:
+    description: 'Label with the format sha-<short_sha>'
+runs:
+  using: 'composite'
+  steps:
+    - name: Get short SHA
+      id: get_short_sha
+      shell: bash
+      run: |
+        echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+    - name: Create label
+      id: create_label
+      shell: bash
+      run: |
+        echo "label=sha-${{ steps.get_short_sha.outputs.short_sha }}" >> $GITHUB_OUTPUT
