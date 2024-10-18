@@ -3,8 +3,10 @@ description: 'Extract short SHA and create a label'
 outputs:
   short_sha:
     description: 'Short SHA of the commit'
+    value: ${{ steps.get_short_sha.outputs.short_sha }}
   label:
     description: 'Label with the format sha-<short_sha>'
+    value: ${{ steps.create_label.outputs.label }}
 runs:
   using: 'composite'
   steps:
